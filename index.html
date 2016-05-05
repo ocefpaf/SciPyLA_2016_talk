@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="A community powered conda packaging">
+  <title>Conda-forge</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #2a211c; color: #bdae9d; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; background-color: #2a211c; color: #bdae9d; border-right: 1px solid #bdae9d; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #bdae9d; background-color: #2a211c; }
+code > span.kw { color: #43a8ed; font-weight: bold; } /* Keyword */
+code > span.dt { text-decoration: underline; } /* DataType */
+code > span.dv { color: #44aa43; } /* DecVal */
+code > span.bn { color: #44aa43; } /* BaseN */
+code > span.fl { color: #44aa43; } /* Float */
+code > span.ch { color: #049b0a; } /* Char */
+code > span.st { color: #049b0a; } /* String */
+code > span.co { color: #0066ff; font-style: italic; } /* Comment */
+code > span.al { color: #ffff00; } /* Alert */
+code > span.fu { color: #ff9358; font-weight: bold; } /* Function */
+code > span.er { color: #ffff00; font-weight: bold; } /* Error */
+code > span.wa { color: #ffff00; font-weight: bold; } /* Warning */
+code > span.cn { } /* Constant */
+code > span.sc { color: #049b0a; } /* SpecialChar */
+code > span.vs { color: #049b0a; } /* VerbatimString */
+code > span.ss { color: #049b0a; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #43a8ed; font-weight: bold; } /* ControlFlow */
+code > span.op { } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { font-weight: bold; } /* Preprocessor */
+code > span.at { } /* Attribute */
+code > span.do { color: #0066ff; font-style: italic; } /* Documentation */
+code > span.an { color: #0066ff; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.co { color: #0066ff; font-weight: bold; font-style: italic; } /* Comment */
+code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="reveal.js/css/theme/black.css" id="theme">
+  <link rel="stylesheet" href="slides.css"/>
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+  <h1 class="title">Conda-forge</h1>
+  <h2 class="author">A community powered conda packaging</h2>
+  <h3 class="date">May 19th</h3>
+</section>
+
+<section id="who-am-i" class="slide level1">
+<h1>Who am I?</h1>
+<ul>
+<li><a href="https://github.com/ocefpaf">Filipe Fernandes</a></li>
+<li>Involved in the <a href="https://github.com/ioos/conda-recipes/wiki">IOOS conda channel</a></li>
+<li>Now deeply involved in the <a href="https://conda-forge.github.io/">conda-forge</a> community channel</li>
+</ul>
+<div class="fragment">
+<p>See <a href="http://wesmckinney.com/blog/conda-forge-centos-moment" class="uri">http://wesmckinney.com/blog/conda-forge-centos-moment</a> for more on conda-forge</p>
+</div>
+<div class="fragment">
+<p>(Yeah... Wes was quicker than us to write about it!)</p>
+</div>
+</section>
+<section id="the-problem" class="slide level1">
+<h1>The problem</h1>
+<p>The Python scientific community always wanted a package manager that is cross platform, does not require sudo, and let's Python be awesome. The conda package manager solved that problem, but created a new ones.</p>
+<div class="fragment">
+<ul>
+<li class="fragment">How do I get software that is not in the <code>defaults</code> channel?</li>
+<li class="fragment">If I build my own binaries where should I host them?</li>
+<li class="fragment">How should I build them to ensure they are compatibly with other systems and the default channel?</li>
+</ul>
+</div>
+</section>
+<section id="more-about-the-problem" class="slide level1">
+<h1>more about the problem</h1>
+<p>The <code>defaults</code> cannot keep up with the pace of the scientific community and many users/communities channels were created to fill in that gap. That led to duplication of effort, recipe fragmentation, unstable environments when mixing and matching packages from different channels, etc.</p>
+</section>
+<section id="lets-take-a-step-back-what-is-a-conda-channel" class="slide level1">
+<h1>Let's take a step back: what is a conda channel?</h1>
+<ul>
+<li class="fragment">Is similar to a Linux repository (or app store)</li>
+<li class="fragment">The service is hosted for free at Continuum's Anaconda Cloud</li>
+<li class="fragment">We can upload pre-compiled binaries using the <code>conda</code> package manager</li>
+</ul>
+</section>
+<section id="well...-what-is-a-conda" class="slide level1">
+<h1>Well... What is a conda?</h1>
+<ul>
+<li class="fragment">An open-source packaging system developed for, and used by, the scientific software community.</li>
+<li class="fragment">From their own webpage:</li>
+<li class="fragment">&quot;Package Everything!&quot;</li>
+<li class="fragment">&quot;And share your repositories with clients or colleagues.&quot;</li>
+</ul>
+</section>
+<section id="why-use-conda" class="slide level1">
+<h1>Why use conda?</h1>
+<ul>
+<li class="fragment">Reproducible environments are easy to create</li>
+<li class="fragment">Better solution than wheels for Python packages that depend on external libraries</li>
+<li class="fragment">One recipe for multiple platforms (no <code>apt-get</code>, <code>yum</code>, <code>brew</code>, etc)</li>
+</ul>
+<div class="fragment">
+<p><a href="http://technicaldiscovery.blogspot.com.br/2013/12/why-i-promote-conda.html" class="uri">http://technicaldiscovery.blogspot.com.br/2013/12/why-i-promote-conda.html</a></p>
+</div>
+</section>
+<section id="the-solution" class="slide level1">
+<h1>The solution</h1>
+<p>The conda-forge organization was created with to be a transparent, open, community led organization, to build conda packages and, hopefully, provide a stable source for packages while reducing the effort duplication and recipe fragmentation.</p>
+<div class="fragment">
+<p>While developed to meet the unique needs of scientific software developers, it is a system that brings features and utilities for the broader developer community.</p>
+</div>
+</section>
+<section id="what-do-we-mean-by-community" class="slide level1">
+<h1>What do we mean by community?</h1>
+<p>Having a community-governed package channel for conda and a community process for submitting, verifying, and storing <del>signed</del> project releases</p>
+<p><a href="https://conda-forge.github.io/" class="uri">https://conda-forge.github.io/</a></p>
+</section>
+<section id="the-conda-forge-channel" class="slide level1">
+<h1>The conda-forge <a href="http://anaconda.org/conda-forge">channel</a></h1>
+<ul>
+<li class="fragment">70 contributors</li>
+<li class="fragment">474 packages</li>
+<li class="fragment">Available platforms are: Linux-64, Windows-32/64, and OS X</li>
+<li class="fragment">You can install with <code>conda install -c conda-forge gdal</code></li>
+</ul>
+</section>
+<section id="builds" class="slide level1">
+<h1>Builds</h1>
+<ul>
+<li class="fragment">The recipes are hosted on <a href="https://github.com/conda-forge/feedstocks/tree/master/feedstocks">GitHub</a></li>
+<li class="fragment"><a href="http://www.appveyor.com/">AppVeyor</a> ➛ Windows</li>
+<li class="fragment"><a href="https://travis-ci.org/">Travis-CI</a> ➛ OSX</li>
+<li class="fragment"><a href="https://registry.hub.docker.com/u/ocefpaf/centos64-conda-obvious-ci/">CircleCI+Docker</a> ➛ Linux</li>
+</ul>
+</section>
+<section id="automation" class="slide level1">
+<h1>Automation</h1>
+<ul>
+<li class="fragment">The point of entry is <a href="https://github.com/conda-forge/staged-recipes">staged-recipes</a></li>
+<li class="fragment">The tooling lives in <a href="https://github.com/conda-forge/conda-smithy">conda-smithy</a></li>
+<li class="fragment">The one the PR is accepted a GitHub team is created based on the maintainers list</li>
+<li class="fragment">The maintainers have commit rights only to their own recipes</li>
+</ul>
+</section>
+<section id="linter" class="slide level1">
+<h1>Linter</h1>
+<figure>
+<img src="images/github_linter.png" />
+</figure>
+</section>
+<section id="issues" class="slide level1">
+<h1>Issues</h1>
+<figure>
+<img src="images/github_issues.png" />
+</figure>
+</section>
+<section id="how-to-use-the-channel" class="slide level1">
+<h1>How to use the channel?</h1>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">conda</span> config --add channels conda-forge
+
+<span class="kw">curl</span> -L http://bit.ly/tutorial -o environment.yml
+
+<span class="kw">conda</span> env create environment.yml</code></pre></div>
+<div class="fragment">
+<p>That is it!</p>
+</div>
+</section>
+<section id="the-tutorial-environment-file" class="slide level1">
+<h1>The tutorial environment file</h1>
+<div class="sourceCode"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="fu">name:</span> geopython
+<span class="fu">channels:</span>
+    <span class="kw">-</span> conda-forge
+<span class="fu">dependencies:</span>
+    <span class="kw">-</span> python=2.7
+    <span class="kw">-</span> jupyter
+    <span class="kw">-</span> matplotlib
+    .
+    .
+    .</code></pre></div>
+</section>
+<section id="how-to-contribute" class="slide level1">
+<h1>How to contribute?</h1>
+<ul>
+<li class="fragment">Report problems</li>
+<li class="fragment">Request packages or new releases</li>
+<li class="fragment">Send PRs adding/fixing packages</li>
+</ul>
+</section>
+<section id="submitting-a-new-recipe" class="slide level1">
+<h1>Submitting a new recipe</h1>
+<ul>
+<li class="fragment">Fork <a href="https://github.com/conda-forge/staged-recipes" class="uri">https://github.com/conda-forge/staged-recipes</a></li>
+<li class="fragment">Submit the PR</li>
+<li class="fragment">The recipe will be built and, once merged, it will trigger the feedstock</li>
+<li class="fragment">At the feedstock the recipe will be re-built and uploaded to the channel</li>
+</ul>
+</section>
+<section id="creating-a-recipe" class="slide level1">
+<h1>Creating a <a href="https://github.com/conda-forge/staged-recipes/tree/master/recipes/example">recipe</a></h1>
+<div class="sourceCode"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="kw">{</span>% set version = &quot;1.0&quot; %<span class="kw">}</span>
+
+<span class="fu">package:</span>
+  <span class="fu">name:</span> example
+  <span class="fu">version:</span> <span class="kw">{</span>{ version <span class="kw">}</span>}
+
+<span class="fu">source:</span>
+  <span class="fu">fn:</span> example-{{ version }}.tar.gz
+  <span class="fu">url:</span> https://pypi.python.org/example-{{ version }}.tar.gz
+  <span class="fu">md5:</span> 842b44f8c95517ed5b792081a2370da1
+  <span class="fu">patches:</span>
+    <span class="kw">-</span> some.patch
+
+<span class="fu">build:</span>
+  <span class="fu">number:</span> 0
+  <span class="fu">script:</span> script: pip install --no-deps .
+
+<span class="fu">requirements:</span>
+  <span class="fu">build:</span>
+    <span class="kw">-</span> python
+    <span class="kw">-</span> pip
+  <span class="fu">run:</span>
+    <span class="kw">-</span> python
+
+<span class="fu">test:</span>
+  <span class="fu">imports:</span>
+    <span class="kw">-</span> example
+  <span class="fu">commands:</span>
+    <span class="kw">-</span> example --version
+
+<span class="fu">about:</span>
+  <span class="fu">home:</span> https://example.com/examples/
+  <span class="fu">license:</span> BSD 3-Clause
+  <span class="fu">summary:</span> An example package
+
+<span class="fu">extra:</span>
+  <span class="fu">recipe-maintainers:</span>
+    <span class="kw">-</span> GitHubHandle</code></pre></div>
+</section>
+<section id="the-truth-about-creating-recipes" class="slide level1">
+<h1>The truth about creating recipes</h1>
+<ul>
+<li class="fragment"><code>conda skeleton pypi &lt;packages&gt;</code></li>
+<li class="fragment"><a href="http://anaconda.org/search?q=gsw">Search</a>, download, copy, and paste</li>
+</ul>
+</section>
+<section id="maintaining-recipes-in-the-feedstock" class="slide level1">
+<h1>Maintaining recipes in the feedstock</h1>
+<div class="sourceCode"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="kw">{</span>% set version = &quot;1.0&quot; %<span class="kw">}</span>
+
+<span class="fu">package:</span>
+  <span class="fu">name:</span> example
+  <span class="fu">version:</span> <span class="kw">{</span>{ version <span class="kw">}</span>}
+
+<span class="fu">source:</span>
+  <span class="fu">fn:</span> example-{{ version }}.tar.gz
+  <span class="fu">url:</span> https://pypi.python.org/example-{{ version }}.tar.gz
+  <span class="fu">md5:</span> 842b44f8c95517ed5b792081a2370da1
+  <span class="fu">patches:</span>
+    <span class="kw">-</span> some.patch
+
+<span class="fu">build:</span>
+  <span class="fu">number:</span> 0
+  .
+  .
+  .</code></pre></div>
+</section>
+<section id="maintenance-example-part-0-the-pr" class="slide level1">
+<h1>Maintenance example part 0: the PR</h1>
+<figure>
+<img src="images/github_maintaince.png" />
+</figure>
+</section>
+<section id="maintenance-example-part-1-the-actual-changes" class="slide level1">
+<h1>Maintenance example part 1: the actual changes</h1>
+<figure>
+<img src="images/github_maintaince_changes.png" />
+</figure>
+</section>
+<section id="maintenance-example-part-2-provenance" class="slide level1">
+<h1>Maintenance example part 2: provenance</h1>
+<figure>
+<img src="images/github_provenance.png" />
+</figure>
+</section>
+<section id="how-to-find-us" class="slide level1">
+<h1>How to find us?</h1>
+<p><a href="https://github.com/conda-forge">Github</a></p>
+<p><a href="https://gitter.im/conda-forge/conda-forge.github.io">Gitter</a></p>
+<p><a href="https://groups.google.com/forum/#!forum/conda-forge">Mailing list</a></p>
+</section>
+<section id="questions" class="slide level1">
+<h1>Questions?</h1>
+<figure>
+<img src="http://imgs.xkcd.com/comics/tools.png" />
+</figure>
+<p><a href="http://xkcd.com/1629/" class="uri">http://xkcd.com/1629/</a></p>
+</section>
+    </div>
+  </div>
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
