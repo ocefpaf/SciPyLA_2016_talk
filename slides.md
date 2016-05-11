@@ -18,6 +18,10 @@ See [http://wesmckinney.com/blog/conda-forge-centos-moment](http://wesmckinney.c
 
 (Yeah... Wes was quicker than us to write about it!)
 
+...
+
+https://www.continuum.io/blog/developer-blog/community-conda-forge
+
 # The problem
 
 The Python scientific community always wanted a package manager that is cross platform,
@@ -95,7 +99,7 @@ Having a community-governed package channel for conda and a community process fo
 
 > - The point of entry is [staged-recipes](https://github.com/conda-forge/staged-recipes)
 > - The tooling lives in [conda-smithy](https://github.com/conda-forge/conda-smithy)
-> - The one the PR is accepted a GitHub team is created based on the maintainers list
+> - Once the PR is accepted a GitHub team is created based on the maintainers list
 > - The maintainers have commit rights only to their own recipes
 
 # [Linter](https://github.com/conda-forge/conda-forge-webservices/tree/master/conda_forge_webservices)
