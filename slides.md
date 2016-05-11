@@ -18,9 +18,11 @@ See [http://wesmckinney.com/blog/conda-forge-centos-moment](http://wesmckinney.c
 
 (Yeah... Wes was quicker than us to write about it!)
 
-...
+. . .
 
-https://www.continuum.io/blog/developer-blog/community-conda-forge
+But we finally got our post out!
+
+[https://www.continuum.io/blog/developer-blog/community-conda-forge](https://www.continuum.io/blog/developer-blog/community-conda-forge)
 
 # The problem
 
