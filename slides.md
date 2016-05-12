@@ -34,7 +34,7 @@ The conda package manager solved that problem, but created a new ones.
 
 > - How do I get software that is not in the `defaults` channel?
 > - If I build my own binaries where should I host them?
-> - How should I build them to ensure they are compatibly with other systems and the default channel?
+> - How should I build them to ensure they are compatible with other systems and the default channel?
 
 # more about the problem
 
@@ -45,7 +45,7 @@ unstable environments when mixing and matching packages from different channels,
 # Let's take a step back: what is a conda channel?
 
 > - Is similar to a Linux repository (or app store)
-> - The service is hosted for free at Continuum's Anaconda Cloud
+> - The service is hosted for free at Continuum's Anaconda Cloud (https://anaconda.org)
 > - We can upload pre-compiled binaries using the `conda` package manager
 
 # Well... What is a conda?
@@ -68,9 +68,9 @@ unstable environments when mixing and matching packages from different channels,
 
 # The solution
 
-The conda-forge organization was created with to be a transparent,
-open, community led organization, to build conda packages and, hopefully,
-provide a stable source for packages while reducing the effort duplication and recipe fragmentation.
+The conda-forge organization was created to be transparent, open and community
+led with the goal of building conda packages and providing a stable source for
+packages while reducing the effort duplication and recipe fragmentation.
 
 . . .
 
@@ -86,7 +86,7 @@ Having a community-governed package channel for conda and a community process fo
 # The conda-forge [channel](http://anaconda.org/conda-forge)
 
 > - 70 contributors
-> - 474 packages
+> - 504 packages
 > - Available platforms are: Linux-64, Windows-32/64, and OS X
 > - You can install with `conda install -c conda-forge gdal`
 
@@ -95,7 +95,7 @@ Having a community-governed package channel for conda and a community process fo
 > - The recipes are hosted on [GitHub](https://github.com/conda-forge/feedstocks/tree/master/feedstocks)
 > - [AppVeyor](http://www.appveyor.com/) &#10139; Windows
 > - [Travis-CI](https://travis-ci.org/) &#10139; OSX
-> - [CircleCI+Docker](https://registry.hub.docker.com/u/ocefpaf/centos64-conda-obvious-ci/) &#10139; Linux
+> - [CircleCI+Docker](https://registry.hub.docker.com/u/ocefpaf/centos64-conda-obvious-ci/) &#10139; Linux (CentOS 5)
 
 # [Automation](https://github.com/conda-forge/conda-forge.github.io/tree/master/scripts)
 
@@ -154,8 +154,8 @@ dependencies:
 
 > - Fork [https://github.com/conda-forge/staged-recipes](https://github.com/conda-forge/staged-recipes)
 > - Submit the PR
-> - The recipe will be built and, once merged, it will trigger the feedstock
-> - At the feedstock the recipe will be re-built and uploaded to the channel
+> - The recipe will be built and, once merged, it will trigger the creation of the feedstock repository
+> - In the feedstock repo, the recipe will be re-built and uploaded to the conda-forge channel on anaconda.org
 
 # Creating a [recipe](https://github.com/conda-forge/staged-recipes/tree/master/recipes/example)
 ```yaml
